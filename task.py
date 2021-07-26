@@ -27,19 +27,24 @@ def excel_manipulation():
     lib = Files()
     lib.open_workbook(r"C:\Users\admin\Desktop\Robocorp\first\SalesData.xlsx")
     try:
-        table = lib.read_worksheet_as_table("data",header=True)
+        table = lib.read_worksheet_as_table("data",header=True) 
         
-       
-        for row in range(10):
+        for row in table.index:
             browser.input_text("id:firstname", table[row][0])
             browser.input_text("id:lastname", table[row][1])
-            browser.input_text("id:salesresult", table[row][3])
+            browser.select_from_list_by_value("id:salestarget",str(table[row][3]))
+            browser.input_text("id:salesresult", table[row][2])
             browser.click_button("class:btn-primary")
-
+            browser.wait_until_element_is_visible("class:btn-secondary",timeout=10)
+            browser.click_button("class:btn-secondary")
+            performance = browser.get_table_cell("tag:table",row=3,column=1)
+            lib.set_worksheet_value(row=1,column=5,value = "Performance")
+            lib.set_worksheet_value(row=row + 2,column = 5,value=performance)
+            lib.save_workbook()
+         
+    
     finally:
         lib.close_workbook()
-
-
 
 if __name__ == "__main__":
     
