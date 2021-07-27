@@ -26,7 +26,7 @@ def Log_in():
 
 def download_excel():
     download = HTTP()
-    download.download(input_url)
+    download.download(input_url,r"C:\Users\admin\Desktop\Robocorp\first\SalesData.xlsx" )
 
 def excel_manipulation():
     lib = Files()
@@ -55,8 +55,8 @@ def excel_manipulation():
         file = open("table.html", "w")
         file.write(result_table)
         file.close()
-        pdf.add_filles_to_pdf("table.html","table_pdf")
-        # pdf.html_to_pdf(result_table, "table.pdf")
+        # pdf.add_filles_to_pdf("table.html","table_pdf")
+        pdf.html_to_pdf(result_table, "table.pdf")
         lib.close_workbook()
 
 if __name__ == "__main__":
