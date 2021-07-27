@@ -1,12 +1,17 @@
-"""Template robot with Python."""
+"""1 level course task from Robocorp"""
 
 from RPA.Browser.Selenium import Selenium
 from RPA.HTTP import HTTP
 from RPA.Excel.Files import Files
+from RPA.PDF import PDF
+
 
 browser = Selenium()
+pdf = PDF()
 
 url = 'https://robotsparebinindustries.com/#/'
+input_url = "https://robotsparebinindustries.com/SalesData.xlsx"
+username = "maria"
 password = "thoushallnotpass"
 
 def open_browser():
@@ -14,14 +19,14 @@ def open_browser():
     browser.maximize_browser_window
 
 def Log_in():
-    browser.input_text("id:username", "maria")
+    browser.input_text("id:username", username)
     browser.input_text("id:password",password)
     browser.click_button("class:btn-primary")
     browser.wait_until_page_contains_element("id:firstname")
 
 def download_excel():
     download = HTTP()
-    download.download("https://robotsparebinindustries.com/SalesData.xlsx")
+    download.download(input_url)
 
 def excel_manipulation():
     lib = Files()
@@ -42,8 +47,16 @@ def excel_manipulation():
             lib.set_worksheet_value(row=row + 2,column = 5,value=performance)
             lib.save_workbook()
          
-    
     finally:
+        browser.capture_element_screenshot("class:sales-summary", "screenshot.png")
+        browser.wait_until_element_is_visible("id:sales-results")
+        browser.click_button("class:btn-secondary")
+        result_table = browser.get_element_attribute("id:sales-results", "outerHTML")
+        file = open("table.html", "w")
+        file.write(result_table)
+        file.close()
+        pdf.add_filles_to_pdf("table.html","table_pdf")
+        # pdf.html_to_pdf(result_table, "table.pdf")
         lib.close_workbook()
 
 if __name__ == "__main__":
