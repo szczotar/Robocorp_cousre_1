@@ -1,4 +1,4 @@
-"""1 level course task from Robocorp"""
+"""1 level course task from Robocorp @Szczotar"""
 
 from RPA.Browser.Selenium import Selenium
 from RPA.HTTP import HTTP
@@ -26,11 +26,11 @@ def Log_in():
 
 def download_excel():
     download = HTTP()
-    download.download(input_url,r"C:\Users\admin\Desktop\Robocorp\first\SalesData.xlsx" )
+    download.download(input_url,r"C:\Users\posia\Desktop\SalesData.xlsx" )
 
 def excel_manipulation():
     lib = Files()
-    lib.open_workbook(r"C:\Users\admin\Desktop\Robocorp\first\SalesData.xlsx")
+    lib.open_workbook(r"C:\Users\posia\Desktop\SalesData.xlsx")
     try:
         table = lib.read_worksheet_as_table("data",header=True) 
         
