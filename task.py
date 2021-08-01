@@ -4,15 +4,20 @@ from RPA.Browser.Selenium import Selenium
 from RPA.HTTP import HTTP
 from RPA.Excel.Files import Files
 from RPA.PDF import PDF
+from RPA.Desktop import Desktop
+from RPA.Robocloud.Secrets import Secrets 
 
 
 browser = Selenium()
 pdf = PDF()
+secrets = Secrets()
 
 url = 'https://robotsparebinindustries.com/#/'
 input_url = "https://robotsparebinindustries.com/SalesData.xlsx"
-username = "maria"
-password = "thoushallnotpass"
+username= secrets.get_secret("Course_credentials")["username"]
+password = secrets.get_secret("Course_credentials")["password"]
+# username = "maria"
+# password = "thoushallnotpass"
 
 def open_browser():
     browser.open_chrome_browser(url)
